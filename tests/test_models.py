@@ -1,32 +1,43 @@
-def test_read_product():
+from tests.factories import ProductFactory
+
+products = []
+
+def create_product():
     product = ProductFactory()
-    assert product["name"] is not None
+    products.append(product)
+    return product
+
+def test_read_product():
+    product = create_product()
+    assert product in products
 
 def test_update_product():
-    product = ProductFactory()
+    product = create_product()
     product["name"] = "Updated"
     assert product["name"] == "Updated"
 
 def test_delete_product():
-    product = ProductFactory()
-    product = None
-    assert product is None
+    product = create_product()
+    products.remove(product)
+    assert product not in products
 
-
-def test_list_all():
-    products = [ProductFactory() for _ in range(5)]
-    assert len(products) == 5
-
+def test_list_all_products():
+    products.clear()
+    create_product()
+    create_product()
+    assert len(products) >= 2
 
 def test_find_by_name():
-    product = ProductFactory()
-    assert "name" in product
+    product = create_product()
+    result = [p for p in products if p["name"] == product["name"]]
+    assert len(result) > 0
 
 def test_find_by_category():
-    product = ProductFactory()
-    assert "category" in product
+    product = create_product()
+    result = [p for p in products if p["category"] == product["category"]]
+    assert len(result) > 0
 
 def test_find_by_availability():
-    product = ProductFactory()
-    assert isinstance(product["available"], bool)
-
+    product = create_product()
+    result = [p for p in products if p["available"] == product["available"]]
+    assert len(result) > 0

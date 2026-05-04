@@ -1,20 +1,36 @@
-Scenario: Read a product
+Feature: Product Management
+
+Scenario: Read Product
   Given a product exists
   When I read the product
-  Then I should see the product
+  Then I should see the product details
 
-Scenario: Update a product
+Scenario: Update Product
   Given a product exists
   When I update the product
-  Then the product is updated
+  Then the product should be updated
 
-Scenario: Delete a product
+Scenario: Delete Product
   Given a product exists
   When I delete the product
-  Then the product is removed
+  Then the product should be removed
 
-Scenario: List all products
+Scenario: List All Products
+  Given multiple products exist
+  When I list all products
+  Then I should see all products
+
+Scenario: Search by Name
   Given products exist
-  When I list products
-  Then I see all products
+  When I search by name
+  Then matching products are returned
 
+Scenario: Search by Category
+  Given products exist
+  When I search by category
+  Then matching products are returned
+
+Scenario: Search by Availability
+  Given products exist
+  When I search by availability
+  Then matching products are returned
